@@ -17,3 +17,6 @@ Y: [<1st-answer>, ...<last-answer>]
 
 Linear model can train with vectors or scalars, though vector training is faster:
 10K runs are 647ms vs 1.719s
+also because the original scalar trainer trained each value separately, it was less accurate
+it was essentially overfitting each individual x -> y mapping
+causing each iteration to make a move that may have been "better" for that individual mapping, but "worse" for the overal model
