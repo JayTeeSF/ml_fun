@@ -1,12 +1,11 @@
 #!/usr/bin/env ruby
 
-require_relative '../lib/linear_model.rb'
-require_relative '../lib/data_to_arrays.rb'
+require_relative '../lib/ml_fun'
+require_relative '../lib/ml_fun/data_to_arrays.rb'
 
 if __FILE__ == $PROGRAM_NAME
-
   if ARGV.size >= 2
-    model = LinearModel.new(ARGV.shift.to_f, ARGV.shift.to_f)
+    model = MlFun::LinearModel.new(ARGV.shift.to_f, ARGV.shift.to_f)
     puts "Using model: #{model.to_h}"
   else
     fail("missing model specifications:\n\t#{$PROGRAM_NAME} <weight> <bias>")
@@ -17,14 +16,14 @@ if __FILE__ == $PROGRAM_NAME
     if ARGV[0] == '--test_data_path'
       ARGV.shift
       test_data_path = ARGV.shift
-      test_data = DataToArrays.new(test_data_path).run
+      test_data = MlFun::DataToArrays.new(test_data_path).run
       x_data = test_data[:x]
       y_data = test_data[:y]
     else
       x_data, y_data = *ARGV.partition { |w| w.to_i.even? }
     end
   else
-    test_data = DataToArrays.new("./data/test_data.txt").run
+    test_data = MlFun::DataToArrays.new("./data/test_data.txt").run
     x_data = test_data[:x]
     y_data = test_data[:y]
   end
