@@ -8,7 +8,7 @@ module MlFun
       @w           = w  || rand
       @b           = b  || rand
       @lr          = lr || rand * 0.1
-      @good_enough = good_enough || 0.001
+      @good_enough = good_enough # no default
     end
 
     # input x as a scalar or a "vector"

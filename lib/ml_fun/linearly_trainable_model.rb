@@ -9,7 +9,7 @@ module MlFun
     end
 
     def done?(x, y, prediction=predict(x,@w,@b), avg_sq_loss=avg(sq_loss(prediction,y)))
-      [Float::INFINITY,Float::NAN].include?(avg_sq_loss) || avg_sq_loss <= @good_enough
+      [Float::INFINITY,Float::NAN].include?(avg_sq_loss) || (@good_enough && (avg_sq_loss <= @good_enough))
     end
 
     def raw_loss(guess, actual)
@@ -23,8 +23,8 @@ module MlFun
     end
 
     def use_gradient_descent?
-      #false # works
-      true # fails
+      false # works
+      #true # fails
     end
 
     def avg(scalar_or_vector)
