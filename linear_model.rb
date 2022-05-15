@@ -1,5 +1,3 @@
-#!/usr/bin/env ruby
-
 require_relative './model.rb'
 require_relative './vector.rb'
 
@@ -23,22 +21,5 @@ class LinearModel < Model
 
   def to_h
     {w: @w, b: @b, lr: @lr}
-  end
-end
-
-if __FILE__ == $PROGRAM_NAME
-  if ARGV[0] =~ /^\d/ 
-    model = LinearModel.new(ARGV.shift.to_f, ARGV.shift.to_f)
-    puts "Using model: #{model.to_h}"
-  else
-    fail("missing model specifications:\n\t#{$PROGRAM_NAME} <weight> <bias>")
-  end
-
-  ary = ARGV
-  unless ARGV.size > 0
-    ary = [7, -1]
-  end
-  ary.each do |x_val|
-    puts "#{x_val} => #{model.predict(x_val.to_f)}"
   end
 end

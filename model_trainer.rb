@@ -5,23 +5,27 @@ require_relative './linear_model.rb'
 require_relative 'linearly_trainable_model.rb'
 
 class ModelTrainer
-  def self.train(iterations=nil, weight=nil, bias=nil)
-    new(iterations, weight, bias).train
+  #.train(iterations, weight, bias, learning_rate, training_data_path: training_data_path)
+  def self.train(iterations=nil, weight=nil, bias=nil, learning_rate=nil, training_data_path: nil)
+    new(iterations, weight, bias, learning_rate, training_data_path: training_data_path).train
   end
 
   DEFAULT_ITERATIONS = 10_000
-  def initialize(num_iterations=nil, weight=nil, bias=nil)
-    @data_hash = DataToArrays.new.run
+  DEFAULT_TRAINING_DATA_PATH = "./training_data.txt"
+  def initialize(num_iterations=nil, weight=nil, bias=nil, learning_rate=nil, training_data_path: nil)
+    training_data_path ||= DEFAULT_TRAINING_DATA_PATH
+    @training_data_hash = DataToArrays.new(training_data_path).run
     @num_iterations = num_iterations || DEFAULT_ITERATIONS
     @weight = weight
     @bias = bias
+    @learning_rate = learning_rate
   end
 
   def train
-    model = LinearlyTrainableModel.new(@weight, @bias)
+    model = LinearlyTrainableModel.new(@weight, @bias, @learning_rate)
     best_model = model
     @num_iterations.times do |n|
-      best_model, details = *model.train(@data_hash[:x], @data_hash[:y])
+      best_model, details = *model.train(@training_data_hash[:x], @training_data_hash[:y])
       puts "iteration: #{n}: #{details}"
       model = best_model
     end
@@ -33,27 +37,37 @@ class ModelTrainer
 end
 
 if __FILE__ == $PROGRAM_NAME
-  iterations = weight = bias = nil
-  if ARGV[0] == '--iterations'
-    ARGV.shift
-    iterations = ARGV.shift.to_i
+  iterations = weight = bias = learning_rate = training_data_path = nil
+  matched = false
+  while ARGV.size > 0
+    if ARGV[0] == '--iterations'
+      ARGV.shift
+      iterations = ARGV.shift.to_i
+      matched = true
+    end
+    if ARGV[0] == '--weight'
+      ARGV.shift
+      weight = ARGV.shift.to_f
+      matched = true
+    end
+    if ARGV[0] == '--bias'
+      ARGV.shift
+      bias = ARGV.shift.to_f
+      matched = true
+    end
+    if ARGV[0] == '--learning_rate'
+      ARGV.shift
+      learning_rate = ARGV.shift.to_f
+      matched = true
+    end
+    if ARGV[0] == '--training_data_path'
+      ARGV.shift
+      training_data_path = ARGV.shift
+      matched = true
+    end
+    break unless matched
+    matched = false
   end
-  if ARGV[0] == '--weight'
-    ARGV.shift
-    weight = ARGV.shift.to_f
-  end
-  if ARGV[0] == '--bias'
-    ARGV.shift
-    bias = ARGV.shift.to_f
-  end
-  model = ModelTrainer.train(iterations, weight, bias)
+  model = ModelTrainer.train(iterations, weight, bias, learning_rate, training_data_path: training_data_path)
   puts "Resulting model: #{model.to_h}"
-
-  ary = ARGV
-  unless ARGV.size > 0
-    ary = [7, -1]
-  end
-  ary.each do |x_val|
-    puts "#{x_val} => #{model.predict(x_val.to_f)}"
-  end
 end

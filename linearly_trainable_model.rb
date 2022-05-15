@@ -1,3 +1,5 @@
+# avoid adding training methods directly to the LinearModel
+# that way, the LinearModel can be fast for predictions!
 class LinearlyTrainableModel < LinearModel
   def avg(scalar_or_vector)
     vos = Vector.maybe(scalar_or_vector)

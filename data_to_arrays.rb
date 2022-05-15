@@ -2,7 +2,7 @@
 
 require 'json'
 class DataToArrays
-  def initialize(input_path="./data.txt")
+  def initialize(input_path)
     @input_path = input_path
   end
 
