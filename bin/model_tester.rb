@@ -31,6 +31,6 @@ if __FILE__ == $PROGRAM_NAME
   y_data = y_data.map{|i| i.to_f}
 
   if y_data
-    puts "#{model.predict(x_data)} ?= #{y_data}"
+    puts "x_data: #{x_data} => #{model.predict(x_data)} ?= #{y_data}"
   end
 end
