@@ -5,7 +5,6 @@ require_relative '../lib/ml_fun/data_to_arrays'
 
 module MlFun
   class ModelTrainer
-    #.train(iterations, weight, bias, learning_rate, training_data_path: training_data_path)
     def self.train(iterations=nil, weight=nil, bias=nil, learning_rate=nil, training_data_path: nil)
       new(iterations, weight, bias, learning_rate, training_data_path: training_data_path).train
     end
@@ -26,7 +25,7 @@ module MlFun
       best_model = model
       @training_data_hash[:x].each.with_index do |x, idx|
         @num_iterations.times do |n|
-          best_model, details = *model.train(x, @training_data_hash[:y][idx])
+          best_model, details = *model.train(x, @training_data_hash[:y][idx], "#{n}.#{idx}".to_f)
           puts "iteration: #{n}[idx: #{idx}: #{details}"
           model = best_model
         end

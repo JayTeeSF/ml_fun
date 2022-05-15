@@ -1,7 +1,7 @@
 ### Train a model (using supervised learning). Optionally specify how-many iterations (10K default)
 X and Y values are stored (by default) in training_data.txt:
 
-./bin/model_trainer.rb --iterations 100 [--weight <starting_weight>] [--bias <starting_bias>] [--learning_rate <learning_rate>] [--training_data_path <path/to/training_data:./data/training_data.txt>]
+./bin/model_trainer.rb --iterations 100 [--weight <starting_weight>] [--bias <starting_bias>] [--learning_rate <learning_rate>] [--training_data_path <path/to/training_data:./data/training_data.txt>] [--good_enough <a fraction indicating how-little-loss is acceptable:0.001>]
 
 ### Specify the weight and bias of a trained (linear) model. 
 X and Y values are stored (by default) in testing_data.txt

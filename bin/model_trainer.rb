@@ -5,28 +5,28 @@ require_relative '../lib/ml_fun/data_to_arrays'
 
 module MlFun
   class ModelTrainer
-    #.train(iterations, weight, bias, learning_rate, training_data_path: training_data_path)
-    def self.train(iterations=nil, weight=nil, bias=nil, learning_rate=nil, training_data_path: nil)
-      new(iterations, weight, bias, learning_rate, training_data_path: training_data_path).train
+    def self.train(iterations=nil, weight=nil, bias=nil, learning_rate=nil, training_data_path: nil, good_enough: nil)
+      new(iterations, weight, bias, learning_rate, training_data_path: training_data_path, good_enough: good_enough).train
     end
 
-    DEFAULT_ITERATIONS = 10_000
+    DEFAULT_ITERATIONS = 100
     DEFAULT_TRAINING_DATA_PATH = "./data/training_data.txt"
-    def initialize(num_iterations=nil, weight=nil, bias=nil, learning_rate=nil, training_data_path: nil)
+    def initialize(num_iterations=nil, weight=nil, bias=nil, learning_rate=nil, training_data_path: nil, good_enough: nil)
       training_data_path ||= DEFAULT_TRAINING_DATA_PATH
-      @training_data_hash = DataToArrays.new(training_data_path).run
-      @num_iterations = num_iterations || DEFAULT_ITERATIONS
-      @weight = weight
-      @bias = bias
-      @learning_rate = learning_rate
+      @training_data_hash  = DataToArrays.new(training_data_path).run
+      @num_iterations      = num_iterations || DEFAULT_ITERATIONS
+      @weight              = weight
+      @bias                = bias
+      @learning_rate       = learning_rate
+      @good_enough         = good_enough
     end
 
     def train
-      model = LinearlyTrainableModel.new(@weight, @bias, @learning_rate)
+      model = LinearlyTrainableModel.new(@weight, @bias, @learning_rate, @good_enough)
       best_model = model
       @num_iterations.times do |n|
-        best_model, details = *model.train(@training_data_hash[:x], @training_data_hash[:y])
-        puts "iteration: #{n}: #{details}"
+        best_model, details = *model.train(@training_data_hash[:x], @training_data_hash[:y], n)
+        puts "iteration: #{n}: #{details}" #, bmod: #{best_model}"
         model = best_model
       end
     rescue Exception => e
@@ -38,9 +38,14 @@ module MlFun
 end
 
 if __FILE__ == $PROGRAM_NAME
-  iterations = weight = bias = learning_rate = training_data_path = nil
+  iterations = weight = bias = learning_rate = training_data_path = good_enough = nil
   matched = false
   while ARGV.size > 0
+    if ARGV[0] == '--good_enough'
+      ARGV.shift
+      good_enough = ARGV.shift.to_f
+      matched = true
+    end
     if ARGV[0] == '--iterations'
       ARGV.shift
       iterations = ARGV.shift.to_i
@@ -69,6 +74,6 @@ if __FILE__ == $PROGRAM_NAME
     break unless matched
     matched = false
   end
-  model = MlFun::ModelTrainer.train(iterations, weight, bias, learning_rate, training_data_path: training_data_path)
+  model = MlFun::ModelTrainer.train(iterations, weight, bias, learning_rate, training_data_path: training_data_path, good_enough: good_enough)
   puts "Resulting model: #{model.to_h}"
 end

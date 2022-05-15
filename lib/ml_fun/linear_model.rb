@@ -4,10 +4,11 @@ require_relative './vector.rb'
 module MlFun
   class LinearModel < Model
     attr_reader :w, :b, :lr
-    def initialize(w=nil, b=nil, lr=nil)
-      @w  = w  || rand
-      @b  = b  || rand
-      @lr = lr || rand * 0.1
+    def initialize(w=nil, b=nil, lr=nil, good_enough=nil)
+      @w           = w  || rand
+      @b           = b  || rand
+      @lr          = lr || rand * 0.1
+      @good_enough = good_enough || 0.001
     end
 
     # input x as a scalar or a "vector"
@@ -21,7 +22,7 @@ module MlFun
     end
 
     def to_h
-      {w: @w, b: @b, lr: @lr}
+      @lr == 0 ? {w: @w, b: @b} : {w: @w, b: @b, lr: @lr}
     end
   end
 end
