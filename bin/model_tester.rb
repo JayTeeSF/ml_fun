@@ -5,7 +5,7 @@ require_relative '../lib/ml_fun/data_to_arrays.rb'
 
 if __FILE__ == $PROGRAM_NAME
   if ARGV.size >= 2
-    model = MlFun::LinearModel.new(ARGV.shift.to_f, ARGV.shift.to_f, 0)
+    model = MlFun::LinearModel.new(ARGV.shift.to_f, ARGV.shift.to_f)
     puts "Using model: #{model.to_h}"
   else
     fail("missing model specifications:\n\t#{$PROGRAM_NAME} <weight> <bias>")

@@ -24,10 +24,16 @@ module MlFun
     def train
       model = LinearlyTrainableModel.new(@weight, @bias, @learning_rate, @good_enough)
       best_model = model
+      last_loss = nil
       @num_iterations.times do |n|
         best_model, details = *model.train(@training_data_hash[:x], @training_data_hash[:y], n)
+        loss = details[:loss]
+        if last_loss && last_loss <= loss # stop if the loss isn't improving!
+          break
+        end
         puts "iteration: #{n}: #{details}" #, bmod: #{best_model}"
         model = best_model
+        last_loss = loss
       end
     rescue Exception => e
       warn(%Q|Exception: #{e.message}; bkt: #{e.backtrace.join("\n\t")}|)

@@ -2,6 +2,17 @@
 # that way, the LinearModel can be fast for predictions!
 module MlFun
   class LinearlyTrainableModel < LinearModel
+    attr_reader :lr
+    def initialize(w=nil, b=nil, lr=nil, good_enough=nil)
+      super(w,b)
+      @lr          = lr || rand * 0.1
+      @good_enough = good_enough # no default
+    end
+
+    def to_h
+      {w: @w, b: @b, lr: @lr}
+    end
+
     def adjustment(avg_sq_loss)
       value = @lr * avg_sq_loss
       raise("illegal adjustment: #{value.inspect}") if value <= 0
@@ -14,7 +25,7 @@ module MlFun
 
     def raw_loss(guess, actual)
       Vector.maybe(
-        Vector::VV.maybe(actual) - Vector::VV.maybe(guess)
+        Vector::VV.maybe(guess) - Vector::VV.maybe(actual)
       )
     end
 
@@ -23,8 +34,8 @@ module MlFun
     end
 
     def use_gradient_descent?
-      false # works
-      #true # fails
+      #false # works
+      true # fails
     end
 
     def avg(scalar_or_vector)
