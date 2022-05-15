@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
-require_relative './linear_model.rb'
-require_relative './data_to_arrays.rb'
+require_relative '../lib/linear_model.rb'
+require_relative '../lib/data_to_arrays.rb'
 
 if __FILE__ == $PROGRAM_NAME
 
@@ -24,7 +24,7 @@ if __FILE__ == $PROGRAM_NAME
       x_data, y_data = *ARGV.partition { |w| w.to_i.even? }
     end
   else
-    test_data = DataToArrays.new("./test_data.txt").run
+    test_data = DataToArrays.new("./data/test_data.txt").run
     x_data = test_data[:x]
     y_data = test_data[:y]
   end

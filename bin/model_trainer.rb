@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require_relative './data_to_arrays.rb'
-require_relative './linear_model.rb'
-require_relative 'linearly_trainable_model.rb'
+require_relative '../lib/data_to_arrays.rb'
+require_relative '../lib/linear_model.rb'
+require_relative '../lib/linearly_trainable_model.rb'
 
 class ModelTrainer
   #.train(iterations, weight, bias, learning_rate, training_data_path: training_data_path)
@@ -11,7 +11,7 @@ class ModelTrainer
   end
 
   DEFAULT_ITERATIONS = 10_000
-  DEFAULT_TRAINING_DATA_PATH = "./training_data.txt"
+  DEFAULT_TRAINING_DATA_PATH = "./data/training_data.txt"
   def initialize(num_iterations=nil, weight=nil, bias=nil, learning_rate=nil, training_data_path: nil)
     training_data_path ||= DEFAULT_TRAINING_DATA_PATH
     @training_data_hash = DataToArrays.new(training_data_path).run
