@@ -27,13 +27,18 @@ module MlFun
       last_loss = nil
       @num_iterations.times do |n|
         best_model, details = *model.train(@training_data_hash[:x], @training_data_hash[:y], n)
+
         loss = details[:loss]
-        if last_loss && last_loss <= loss # stop if the loss isn't improving!
+        if last_loss && (last_loss == loss) # stop if the loss isn't improving!
+          warn("loss isn't improving")
           break
         end
-        puts "iteration: #{n}: #{details}" #, bmod: #{best_model}"
+        if (n % 100 == 0)
+          last_loss = loss
+        end
+
+        warn details
         model = best_model
-        last_loss = loss
       end
     rescue Exception => e
       warn(%Q|Exception: #{e.message}; bkt: #{e.backtrace.join("\n\t")}|)
@@ -44,42 +49,24 @@ module MlFun
 end
 
 if __FILE__ == $PROGRAM_NAME
-  iterations = weight = bias = learning_rate = training_data_path = good_enough = nil
+  arg_value_for = {'--iterations' => {value: nil, format: :to_i},'--weight' => {value: nil, format: :to_f}, '--bias' => {value: nil, format: :to_f}, '--learning_rate' => {value: nil, format: :to_f}, '--training_data_path' => {value: nil, format: :to_s}, '--good_enough' => {value: nil, format: :to_f}}
   matched = false
   while ARGV.size > 0
-    if ARGV[0] == '--good_enough'
+    if arg = arg_value_for.keys.detect {|k| ARGV[0] == k}
       ARGV.shift
-      good_enough = ARGV.shift.to_f
-      matched = true
-    end
-    if ARGV[0] == '--iterations'
-      ARGV.shift
-      iterations = ARGV.shift.to_i
-      matched = true
-    end
-    if ARGV[0] == '--weight'
-      ARGV.shift
-      weight = ARGV.shift.to_f
-      matched = true
-    end
-    if ARGV[0] == '--bias'
-      ARGV.shift
-      bias = ARGV.shift.to_f
-      matched = true
-    end
-    if ARGV[0] == '--learning_rate'
-      ARGV.shift
-      learning_rate = ARGV.shift.to_f
-      matched = true
-    end
-    if ARGV[0] == '--training_data_path'
-      ARGV.shift
-      training_data_path = ARGV.shift
+      arg_value_for[arg][:value] = ARGV.shift.send(arg_value_for[arg][:format])
       matched = true
     end
     break unless matched
     matched = false
   end
-  model = MlFun::ModelTrainer.train(iterations, weight, bias, learning_rate, training_data_path: training_data_path, good_enough: good_enough)
+  model = MlFun::ModelTrainer.train(
+    arg_value_for['--iterations'][:value],
+    arg_value_for['--weight'][:value],
+    arg_value_for['--bias'][:value],
+    arg_value_for['--learning_rate'][:value],
+    training_data_path: arg_value_for['--training_data_path'][:value],
+    good_enough: arg_value_for['--good_enough'][:value]
+  )
   puts "Resulting model: #{model.to_h}"
 end
