@@ -13,8 +13,10 @@ const vector = {
     return c
   },
   join: function(joinStr) {
-  concat: function() {
     return this.arr.join(joinStr);
+  },
+  concat: function() {
+    return this.arr.concat();
   },
   pop: function() {
     return this.arr.pop();
