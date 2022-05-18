@@ -39,54 +39,54 @@ const vector = {
   dividedBy: function(operand) {
     if ((typeof operand == 'object') && (!Array.isArray(operand)) && (operand.type == 'vector')) {
       if (vector.length == operand.length) {
-        console.log("vector / vector division...")
+        //console.log("vector / vector division...")
         return this.make(this.arr.map(this._divPer(operand)));
 
       } else {
         console.log("FAILED vector / vector division...")
       }
     } else {
-      console.log("vector / scalar division...")
+      //console.log("vector / scalar division...")
       return this.make(this.arr.map(this._divBy(operand)));
     }
   },
   times: function(operand) {
     if ((typeof operand == 'object') && (!Array.isArray(operand)) && (operand.type == 'vector')) {
       if (vector.length == operand.length) {
-        console.log("vector * vector multiplication...")
+        //console.log("vector * vector multiplication...")
         return this.make(this.arr.map(this._multPer(operand)));
       } else {
         console.log("FAILED vector * vector multiplication...")
       }
     } else {
-      console.log("vector * scalar multiplication...")
+      //console.log("vector * scalar multiplication...")
       return this.make(this.arr.map(this._multBy(operand)));
     }
   },
   minus: function(operand) {
     if ((typeof operand == 'object') && (!Array.isArray(operand)) && (operand.type == 'vector')) {
       if (vector.length == operand.length) {
-        console.log("vector - vector subtraction...")
+        //console.log("vector - vector subtraction...")
         return this.make(this.arr.map(this._subPer(operand)));
       } else {
         console.log("FAILED vector - vector subtraction...")
       }
     } else {
-      console.log("vector - scalar subtraction...")
+      //console.log("vector - scalar subtraction...")
       return this.make(this.arr.map(this._subBy(operand)));
     }
   },
   plus: function(operand) {
     if ((typeof operand == 'object') && (!Array.isArray(operand)) && (operand.type == 'vector')) {
       if (vector.length == operand.length) {
-        console.log("vector + vector addition...")
+        //console.log("vector + vector addition...")
         return this.make(this.arr.map(this._addPer(operand)));
         // return this.arr.map((e, idx) => { console.log('e: ' + e + ' second-e ' + operand[idx] + ' = ' + e + operand[idx]); });
       } else {
         console.log("FAILED vector + vector addition...")
       }
     } else {
-      console.log("vector + scalar addition...")
+      //console.log("vector + scalar addition...")
       return this.make(this.arr.map(this._addBy(operand)));
     }
   },
@@ -167,7 +167,7 @@ const trainer = {
     const vY = isNaN(Y) ? vector.make(Y.concat()) : vector.make([Y]);
     prediction ||= model.predict(X, w, b);
     const lossValue = (prediction.minus(vY)).pow(2).avg();
-    console.log(`for(${X}, ${Y}, using: ${w} and ${b}) prediction: ${prediction.concat()} => ${lossValue}`);
+    // console.log(`for(${X}, ${Y}, using: ${w} and ${b}) prediction: ${prediction.concat()} => ${lossValue}`);
     return lossValue;
   },
 
@@ -176,11 +176,11 @@ const trainer = {
     const vY = isNaN(Y) ? vector.make(Y.concat()) : vector.make([Y]);
     prediction ||= model.predict(X, w, b)
     var predictionMinusVy = prediction.minus(vY); // calculate this once per call
-    console.log(`vX: ${vX.concat()}, predictionMinusVy: ${predictionMinusVy.concat()}`)
+    //console.log(`vX: ${vX.concat()}, predictionMinusVy: ${predictionMinusVy.concat()}`)
     const gradientWithRespectToW = 2 * (vX.times(predictionMinusVy)).avg();
     const gradientWithRespectToB = 2 * (predictionMinusVy).avg();
     const gradientValues = [gradientWithRespectToW, gradientWithRespectToB];
-    console.log(`gradientValues: ${gradientValues}`);
+    //console.log(`gradientValues: ${gradientValues}`);
     return gradientValues;
   },
 
