@@ -20,8 +20,8 @@
     <div class="container">
       <div id="main_content">
         <p>Given some X & Y Training value, let's train a simple linear model:</p>
-        <p>Training X (input-value(s)): <input type="text" id="TrainingX" size="32"></p>
-        <p>Training Y (correct-output-value(s)): <input type="text" id="TrainingY" size="32"></p>
+        <p>Training X (input-value(s)): <input type="text" id="TrainingX" size="32" placeholder="-1, 0, 1, 2, 3, 4"></p>
+        <p>Training Y (correct-output-value(s)): <input type="text" id="TrainingY" size="32" placeholder="-2, 1, 4, 7, 10, 13"></p>
         <button id="train" onclick="trainer.trainTo('output')">Train</button>
         <form id="mainForm">
           <input id="predict" name="Predict" type="submit" onclick="model.predictWith()">

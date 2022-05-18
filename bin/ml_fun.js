@@ -145,7 +145,8 @@ const model = {
     const bInput  = document.getElementById('bias');
     const XInputs  = document.getElementById('TestX');
     const YOutputs  = document.getElementById('TestY');
-    const Xvalues = XInputs.value.split(','); // one or more #'s
+    const XValues = (XInputs.value == '' ? XInputs.placeholder : XInputs.value).split(','); // one or more #'s
+    //const Xvalues = XInputs.value.split(','); // one or more #'s
     /\d+/.test(Xvalues) ? YOutputs.value = this.predict(Xvalues.map(parseFloat), parseFloat(wInput), parseFloat(bInput)) : alert("Input X value(s)")
   },
   predict: function(X, weight=this.w, bias=this.b) {
@@ -185,10 +186,11 @@ const trainer = {
   },
 
   trainTo: function(outputId, iterations=this.iterations, lr=this.learningRate) {
-    const XInputs  = document.getElementById('TestX');
-    const YOutputs  = document.getElementById('TestY');
-    const YTrainingOutputs = YOutputs.value.split(','); // one or more #'s
-    const XTrainingInputs = XInputs.value.split(','); // one or more #'s
+    const XInputs  = document.getElementById('TrainingX');
+    const YOutputs  = document.getElementById('TrainingY');
+    const YTrainingOutputs = (YOutputs.value == '' ? YOutputs.placeholder : YOutputs.value).split(','); // one or more #'s
+    const XTrainingOutputs = (XInputs.value == '' ? XInputs.placeholder : XInputs.value).split(','); // one or more #'s
+    // const XTrainingInputs = XInputs.value.split(','); // one or more #'s
     this.train(XTrainingInputs,YTrainingOutputs,iterations,lr, outputId)
   },
 
