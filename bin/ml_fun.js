@@ -141,8 +141,8 @@ const model = {
   w: 0,
   b: 0,
   predictWith: function() {
-    const wInput  = document.getElementById('weight');
-    const bInput  = document.getElementById('bias');
+    const wInput  = document.getElementById('weight').value;
+    const bInput  = document.getElementById('bias').value;
     const XInputs  = document.getElementById('TestX');
     const YOutputs  = document.getElementById('TestY');
     const XValues = (XInputs.value == '' ? XInputs.placeholder : XInputs.value).split(','); // one or more #'s
