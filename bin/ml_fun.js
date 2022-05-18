@@ -189,7 +189,7 @@ const trainer = {
     const XInputs  = document.getElementById('TrainingX');
     const YOutputs  = document.getElementById('TrainingY');
     const YTrainingOutputs = (YOutputs.value == '' ? YOutputs.placeholder : YOutputs.value).split(','); // one or more #'s
-    const XTrainingOutputs = (XInputs.value == '' ? XInputs.placeholder : XInputs.value).split(','); // one or more #'s
+    const XTrainingInputs = (XInputs.value == '' ? XInputs.placeholder : XInputs.value).split(','); // one or more #'s
     // const XTrainingInputs = XInputs.value.split(','); // one or more #'s
     this.train(XTrainingInputs,YTrainingOutputs,iterations,lr, outputId)
   },
