@@ -218,7 +218,7 @@ const trainer = {
       if (null == outputId) {
         console.log(`Iteration ${i} => Loss: ${lossVal}, w: ${w}, b: ${b}`);
       } else {
-        message.push(`Iteration ${i} => Loss: ${lossVal}, w: ${w}, b: ${b}`)
+        messages.push(`Iteration ${i} => Loss: ${lossVal}, w: ${w}, b: ${b}`)
       }
     }
 
