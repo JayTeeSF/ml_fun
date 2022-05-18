@@ -144,12 +144,24 @@ const model = {
   w: 0,
   b: 0,
   predictWith: function() {
-    const wInput  = document.getElementById('weight').value;
-    const bInput  = document.getElementById('bias').value;
+    const wInput  = parseFloat(document.getElementById('weight').value);
+    const bInput  = parseFloat(document.getElementById('bias').value);
     const XInputs  = document.getElementById('TestX');
     const YOutputs  = document.getElementById('TestY');
     const XValues = (XInputs.value == '' ? XInputs.placeholder : XInputs.value).split(','); // one or more #'s
-    /\d+/.test(XValues) ? YOutputs.value = this.predict(XValues.map(parseFloat), parseFloat(wInput), parseFloat(bInput)).join(", ") : alert("Input X value(s)")
+    const XHasNoNumbers = !/\d+/.test(XValues);
+    if (isNaN(wInput) || isNaN(bInput) || XHasNoNumbers) {
+      if (isNaN(wInput)) {
+        alert("Input a weight value, e.g. a float like 3.0");
+      } else if (isNaN(bInput)) {
+        alert("Input a bias value, e.g. a float like 1.0");
+      } else {
+        alert("Input X value(s)");
+      }
+    } else {
+      const val =  this.predict(XValues.map(parseFloat), wInput, bInput);
+      YOutputs.value = isNaN(val) ? val.join(", ") : val
+    }
   },
   predict: function(X, weight=this.w, bias=this.b) {
     const vX = isNaN(X) ? vector.make(X.concat()) : vector.make([X]);
@@ -166,6 +178,15 @@ const trainer = {
   learningRate: 0.0001,
   iterations: 20000,
 
+  clearTrainingLog: function(outputId='output') {
+    const pTag  = document.getElementById(outputId);
+    pTag.children
+    if (typeof pTag.children[0] === 'undefined') {
+      pTag.innerHTML = "";
+    } else {
+      pTag.innerHTML = pTag.children[0].innerHTML;
+    }
+  },
   loss: function(X, Y, w, b, prediction=null) {
     const vY = isNaN(Y) ? vector.make(Y.concat()) : vector.make([Y]);
     prediction ||= model.predict(X, w, b);
