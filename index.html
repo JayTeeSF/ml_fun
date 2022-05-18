@@ -12,26 +12,31 @@
 
     <div>
       <div class="container">
-        <h1>ML Fun</h1>
-        <h2>Training a basic Linear ML Model</h2>
+        <h1>Machine Learning Fun</h1>
+        <h2>Training a basic Linear (i.e. where 'Y = wX + b') Model (using Supervised Learning)</h2>
       </div>
     </div>
 
     <div class="container">
       <div id="main_content">
-        <p>Given some X & Y Training value, let's train a simple linear model:</p>
+        <p>Given some X & Y Training value(s), let's train a simple linear model to estimate the best line through your data. Click the 'Train' button to start:</p>
         <p>Training X (input-value(s)): <input type="text" id="TrainingX" size="32" placeholder="-1, 0, 1, 2, 3, 4"></p>
-        <p>Training Y (correct-output-value(s)): <input type="text" id="TrainingY" size="32" placeholder="-2, 1, 4, 7, 10, 13"></p>
+        <p>Training Y (expected-answer-value(s)): <input type="text" id="TrainingY" size="32" placeholder="-2, 1, 4, 7, 10, 13"></p>
         <button id="train" onclick="trainer.trainTo('output')">Train</button>
-
+        <p> The model uses the Y values to check it's work. During each training iteration it adjusts the weight and bias values used to estimate the line</p>
         <br />
-        <p>Once you've trained a model (and/or supplied some a Weight & Bias) along with Some Test X values, click "Predict" to see how your model performs:</p>
+        <br />
+
+        <p>Once you've trained a model or supplied custom Weight & Bias value(s) along with some Test X values, click 'Predict' to see how your model performs:</p>
         <button id="predict" onclick="model.predictWith()">Predict</button>
         <p>Weight: <input type="number" id="weight" size="32" step="any"></p>
         <p>Bias: <input type="number" id="bias" size="32" step="any"></p>
-        <p>Test X (input-value(s)): <input type="text" id="TestX" size="32"></p>
-        <p>Test Y (generated-value(s)): <input type="text" id="TestY" size="32"></p>
+        <p>Test X (user-supplied test-value(s) go here): <input type="text" id="TestX" size="32"></p>
+        <p>Test Y (model-generated-value(s) show-up here): <input type="text" id="TestY" size="32"></p>
+        <p>Assuming you used the default training values, if you enter 20 as your Test X value, even though the model never saw that value during training, it should Answer (Test Y):  61</p>
 
+        <br />
+        <br />
         <div id="output">
         </div>
       </div>
