@@ -204,6 +204,7 @@ const trainer = {
       wInput  = document.getElementById('weight')
       bInput  = document.getElementById('bias')
     }
+    var messages = [];
     for(let i = 0; i < iterations; i++) {
       prediction = model.predict(X, w, b); // calculate this once per loop!
       lossVal = this.loss(X, Y, w, b, prediction);
@@ -217,14 +218,21 @@ const trainer = {
       if (null == outputId) {
         console.log(`Iteration ${i} => Loss: ${lossVal}, w: ${w}, b: ${b}`);
       } else {
-        subPTag = document.createElement("p")
-        subPTag.innerHTML = `Iteration ${i} => Loss: ${lossVal}, w: ${w}, b: ${b}`
-        pTag.prependChild(subPTag)
+        message.push(`Iteration ${i} => Loss: ${lossVal}, w: ${w}, b: ${b}`)
       }
     }
+
+    if (null != outputId) {
+      for(let i=0; i< messages.length; i++) {
+        subPTag = document.createElement("p")
+        subPTag.innerHTML = messages.pop()
+        pTag.appendChild(subPTag)
+      }
+    }
+
     if (outputId != null) {
-     wInput.value = w 
-     bInput.value = b 
+      wInput.value = w 
+      bInput.value = b 
     }
     return [w, b];
   },
