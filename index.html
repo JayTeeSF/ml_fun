@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <script src="./bin/ml_fun.js"></script>
+
+    <title>ML @ JayTeeSF</title>
+  </head>
+
+  <body>
+
+    <div>
+      <div class="container">
+        <h1>ML Fun</h1>
+        <h2>Training a basic Linear ML Model</h2>
+      </div>
+    </div>
+
+    <div class="container">
+      <div id="main_content">
+        <p>Given some X & Y Training value, let's train a simple linear model:</p>
+        <p>Training X (input-value(s)): <input type="text" id="TrainingX" size="32"></p>
+        <p>Training Y (correct-output-value(s)): <input type="text" id="TrainingY" size="32"></p>
+        <button id="train" onclick="trainer.trainTo('output')">Train</button>
+        <form id="mainForm">
+          <input id="predict" name="Predict" type="submit" onclick="model.predictWith()">
+          <p>Weight: <input type="number" id="weight" size="32" step="any"></p>
+          <p>Bias: <input type="number" id="bias" size="32" step="any"></p>
+          <p>Test X (input-value(s)): <input type="text" id="TestX" size="32"></p>
+          <p>Test Y (output-value(s)): <input type="text" id="TestY" size="32"></p>
+        </form>
+        <div id="output">
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
