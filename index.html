@@ -23,13 +23,15 @@
         <p>Training X (input-value(s)): <input type="text" id="TrainingX" size="32" placeholder="-1, 0, 1, 2, 3, 4"></p>
         <p>Training Y (correct-output-value(s)): <input type="text" id="TrainingY" size="32" placeholder="-2, 1, 4, 7, 10, 13"></p>
         <button id="train" onclick="trainer.trainTo('output')">Train</button>
-        <form id="mainForm">
-          <input id="predict" name="Predict" type="submit" onclick="model.predictWith()">
-          <p>Weight: <input type="number" id="weight" size="32" step="any"></p>
-          <p>Bias: <input type="number" id="bias" size="32" step="any"></p>
-          <p>Test X (input-value(s)): <input type="text" id="TestX" size="32"></p>
-          <p>Test Y (output-value(s)): <input type="text" id="TestY" size="32"></p>
-        </form>
+
+        <br />
+        <p>Once you've trained a model (and/or supplied some a Weight & Bias) along with Some Test X values, click "Predict" to see how your model performs:</p>
+        <button id="predict" onclick="model.predictWith()">Predict</button>
+        <p>Weight: <input type="number" id="weight" size="32" step="any"></p>
+        <p>Bias: <input type="number" id="bias" size="32" step="any"></p>
+        <p>Test X (input-value(s)): <input type="text" id="TestX" size="32"></p>
+        <p>Test Y (generated-value(s)): <input type="text" id="TestY" size="32"></p>
+
         <div id="output">
         </div>
       </div>
