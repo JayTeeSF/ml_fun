@@ -146,8 +146,7 @@ const model = {
     const XInputs  = document.getElementById('TestX');
     const YOutputs  = document.getElementById('TestY');
     const XValues = (XInputs.value == '' ? XInputs.placeholder : XInputs.value).split(','); // one or more #'s
-    //const Xvalues = XInputs.value.split(','); // one or more #'s
-    /\d+/.test(Xvalues) ? YOutputs.value = this.predict(Xvalues.map(parseFloat), parseFloat(wInput), parseFloat(bInput)) : alert("Input X value(s)")
+    /\d+/.test(XValues) ? YOutputs.value = this.predict(XValues.map(parseFloat), parseFloat(wInput), parseFloat(bInput)) : alert("Input X value(s)")
   },
   predict: function(X, weight=this.w, bias=this.b) {
     const vX = isNaN(X) ? vector.make(X.concat()) : vector.make([X]);
