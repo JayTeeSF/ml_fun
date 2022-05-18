@@ -12,8 +12,9 @@ const vector = {
     c.arr = args;
     return c
   },
+  join: function(joinStr) {
   concat: function() {
-    return this.arr.concat();
+    return this.arr.join(joinStr);
   },
   pop: function() {
     return this.arr.pop();
@@ -146,7 +147,7 @@ const model = {
     const XInputs  = document.getElementById('TestX');
     const YOutputs  = document.getElementById('TestY');
     const XValues = (XInputs.value == '' ? XInputs.placeholder : XInputs.value).split(','); // one or more #'s
-    /\d+/.test(XValues) ? YOutputs.value = this.predict(XValues.map(parseFloat), parseFloat(wInput), parseFloat(bInput)) : alert("Input X value(s)")
+    /\d+/.test(XValues) ? YOutputs.value = this.predict(XValues.map(parseFloat), parseFloat(wInput), parseFloat(bInput)).join(", ") : alert("Input X value(s)")
   },
   predict: function(X, weight=this.w, bias=this.b) {
     const vX = isNaN(X) ? vector.make(X.concat()) : vector.make([X]);
